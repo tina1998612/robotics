@@ -25,10 +25,10 @@
 #define CAM_H 60
 #define cam_w 80
 #define cam_h 120
-#define KP   4.3
-#define KD   3.4
-#define KP_curve 6.2
-#define KD_curve 2.3
+double KP  = 4.3;
+double KD  = 3.4;
+double KP_curve =6.2;
+double KD_curve =2.3;
 #define KP_R  6
 #define KD_R  2.8
 #define KP_LM 0.06
@@ -76,57 +76,50 @@ string inputStr;
 bool tune = false;
 vector<double> constVector;
 bool programRun = true;
+string s;
+char c[20];
+double data_string[20]={};
+int data_string_len = 0;
+
+double toDouble(char* s){
+
+    int start = 0, flag = 0;
+    double cnt=1;
+    if(s[0]=='-') start++;
+    double d = 0;
+    for(int i=start;i<strlen(s);i++){
+        if(s[i]=='.'){
+            flag = i;
+            continue;
+        }
+        d*=10;
+        d+=s[i]-'0';
+        if(flag) cnt*=10;
+    }
+    if(s[0]=='-') return -d/cnt;
+    return d/cnt;
+}
 
 bool bluetoothListener(const Byte *data, const size_t size) {
 
-	if (data[0] == 'P') {
-		if (programRun == 0){
-		programRun = 1;
+	switch(data[0]){
+		case 'f':
+			data_string[data_string_len++] = toDouble(strcpy(c, s.c_str()));
+			s = "";
+			break;
+		case '\n':
+			KP = data_string[0]/100;
+			KD = data_string[1]/100;
+			KP_curve = data_string[2]/100;
+			KD_curve = data_string[3]/100;
+			data_string_len = 0;
+			break;
+		default:
+			s+=data[0];
+			break;
 		}
-		else{
-			programRun = 0;
-		}
-	}
 
-	if (data[0] == 't') {
-		programRun = 1;
-		tune = 1;
-		inputStr = "";
-	}
-	if (tune) {
-		unsigned int i = 0;
-		while (i<size) {
-			if (data[i] != 't' && data[i] != '\n') {
-				inputStr += (char)data[i];
-			} else if (data[i] == '\n') {
-				tune = 0;
-				break;
-			}
-			i++;
-		}
-		if (!tune) {
-			constVector.clear();
-			char * pch;
-			pch = strtok(&inputStr[0], ",");
-			while (pch != NULL){
-				double constant;
-				stringstream(pch) >> constant;
-				constVector.push_back(constant);
-				pch = strtok (NULL, ",");
-			}
-
-		}
-	}
-
-//	else if (data[0] == 'a') {
-//		servoPtr->SetDegree(900);
-//	} else if (data[0] == 'd') {
-//		servoPtr->SetDegree(430);
-//	} else if (data[0] == 'A' || data[0] == 'D') {
-//		servoPtr->SetDegree(700);
-//	}
-
-	return 1;
+		return true;
 }
 
 
