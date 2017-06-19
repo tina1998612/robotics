@@ -94,9 +94,12 @@ void setup() {
   m.addItem(makeItem("KD", Float.valueOf(lines[1]), 0, 5));
   m.addItem(makeItem("KP_curve", Float.valueOf(lines[2]), 0, 10));
   m.addItem(makeItem("KD_curve", Float.valueOf(lines[3]), 0, 10));
-  m.addItem(makeItem("speed", Float.valueOf(lines[4]), 0, 90));
-  m.addItem(makeItem("sp", Float.valueOf(lines[4]), 0, 90));
-  m.addItem(makeItem("sp", Float.valueOf(lines[4]), 0, 90));
+  m.addItem(makeItem("speed", Float.valueOf(lines[3]), 0, 90));
+  m.addItem(makeItem("sp", Float.valueOf(lines[3]), 0, 90));
+  m.addItem(makeItem("ss", Float.valueOf(lines[3]), 0, 90));
+  m.addItem(makeItem("sseed", Float.valueOf(lines[3]), 0, 90));
+  m.addItem(makeItem("sa", Float.valueOf(lines[3]), 0, 90));
+  m.addItem(makeItem("sss", Float.valueOf(lines[3]), 0, 90));
 }
 
 public void auto(){
