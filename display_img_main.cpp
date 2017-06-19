@@ -78,7 +78,7 @@ vector<double> constVector;
 bool programRun = true;
 string s;
 char c[20];
-double data_string[20]={};
+float data_string[20]={};
 int data_string_len = 0;
 
 float toDouble(char* s){
