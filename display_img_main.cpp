@@ -445,10 +445,14 @@ int main(void)
 			camera.UnlockBuffer();
 			//Sending image
 			if(sent == 5){
+			  int _KP = floor(KP*10), _KD = floor(KD*10), _KP_curve = floor(KP_curve*10), _KD_curve = floor(KD_curve*10);
+			  const Byte data[4] = {_KP, _KD, _KP_curve, _KD_curve};
+
 			  sent = 0;
-			  const Byte imageByte = 170;
+			  Byte imageByte = 170;
 			  bluetooth1.SendBuffer(&imageByte, 1);
 			  bluetooth1.SendBuffer(cameraBuffer,1200);
+			  bluetooth1.SendBuffer(data, 4);
 
 
 			}
