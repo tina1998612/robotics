@@ -92,8 +92,8 @@ void setup() {
   // add some items to our SilderList
   m.addItem(makeItem("KP", Float.valueOf(lines[0]), 0, 5));
   m.addItem(makeItem("KD", Float.valueOf(lines[1]), 0, 5));
-  m.addItem(makeItem("KP_curve", Float.valueOf(lines[2]), 0, 5));
-  m.addItem(makeItem("KD_curve", Float.valueOf(lines[3]), 0, 500));
+  m.addItem(makeItem("KP_curve", Float.valueOf(lines[2]), 0, 10));
+  m.addItem(makeItem("KD_curve", Float.valueOf(lines[3]), 0, 10));
   m.addItem(makeItem("speed", Float.valueOf(lines[4]), 0, 90));
   m.addItem(makeItem("sp", Float.valueOf(lines[4]), 0, 90));
   m.addItem(makeItem("sp", Float.valueOf(lines[4]), 0, 90));
@@ -271,13 +271,12 @@ void draw() {
 
   if(myPort.available() > 0){
     inputInt = myPort.read();
-    println(inputInt);
-    switch(inputInt){
-      case 170:
-        cnt = 0;
+    if(inputInt!=170) println(inputInt);
+    if(inputInt==170){
+      cnt = 0;
         arrayPosX = 0;
         arrayPosY = 0;
-        now = System.currentTimeMillis();;
+        now = System.currentTimeMillis();
         while (cnt<globalWidth*globalHeight/8) {
           if (myPort.available() > 0) {  
             now = System.currentTimeMillis();
@@ -312,39 +311,25 @@ void draw() {
         else outputImage();
         popMatrix();
         cnt = 0;
-        /*
-        while(cnt<6){
-          if(myPort.available()>0) {
+        now = System.currentTimeMillis();
+        while(cnt<4){
+          if(myPort.available()>0) {  
             data_from_car[cnt] = myPort.read();
-            switch(cnt){
-              case 0:
-                data_from_car[cnt]/=100; // since Byte can only pass integers, we multiply 100 for sending data and divide 100 once received
-                break;
-              case 1:
-                data_from_car[cnt]/=100;
-                break;
-              case 2:
-                data_from_car[cnt]/=100;
-                break;
-              case 3:
-                data_from_car[cnt]/=100;
-                break;
-              case 4:
-                data_from_car[cnt]/=100;
-                break;
-            }
+            data_from_car[cnt]/=10;
+            println(data_from_car[cnt]);
             cnt++;
-            now = System.currentTimeMillis();
           }
           if(System.currentTimeMillis()-now>3000){
             break;
           }
         }
-        */
-        break;
+    }
+    /*switch(inputInt){
+      case 170:
         
         
-        /*
+        
+        
       case 171:
         cnt = 0;
         while(cnt<6){
@@ -415,8 +400,8 @@ void draw() {
             data_received = myPort.readChar();
          }
          break;
-         */
-      }
+         
+      }*/
     }
 }
 
