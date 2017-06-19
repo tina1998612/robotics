@@ -25,10 +25,10 @@
 #define CAM_H 60
 #define cam_w 80
 #define cam_h 120
-double KP  = 4.3;
-double KD  = 3.4;
-double KP_curve =6.2;
-double KD_curve =2.3;
+float KP  = 4.3;
+float KD  = 3.4;
+float KP_curve =6.2;
+float KD_curve =2.3;
 #define KP_R  6
 #define KD_R  2.8
 #define KP_LM 0.06
@@ -81,12 +81,12 @@ char c[20];
 double data_string[20]={};
 int data_string_len = 0;
 
-double toDouble(char* s){
+float toDouble(char* s){
 
     int start = 0, flag = 0;
-    double cnt=1;
+    float cnt=1;
     if(s[0]=='-') start++;
-    double d = 0;
+    float d = 0;
     for(int i=start;i<strlen(s);i++){
         if(s[i]=='.'){
             flag = i;
