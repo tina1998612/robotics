@@ -11,7 +11,7 @@ int inputInt;
 double []data_from_car = new double[20];
 
 int globalWidth = 80;
-int globalHeight = 120;
+int globalHeight = 60;
 int cnt;
 int image_data, sys_time_dif=0;
 
